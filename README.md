@@ -21,7 +21,7 @@ gogo 生成的 protobuf代码性能更好，人性化高，并且兼容protobu�
 安装`protoc-gen-gofast`二进制：
 
 ```sh
-go get github.com/rpcxio/protoc-gen-rpcx/protoc-gen-gofast
+go get github.com/rpcxio/protoc-gen-gogorpcx/protoc-gen-gofast
 ```
 
 使用它你可以产生更快的序列化代码：

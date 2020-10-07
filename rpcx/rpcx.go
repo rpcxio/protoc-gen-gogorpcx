@@ -137,7 +137,7 @@ func (p *rpcx) generateService(file *generator.FileDescriptor, service *pb.Servi
 		// You can pass a shared OneClient object created by NewOneClientFor%[1]s.
 		func New%[1]sOneClient(oneclient client.OneClient) *%[1]sOneClient {
 			return &%[1]sOneClient{
-				serviceName: %[1]s,
+				serviceName: "%[1]s",
 				oneclient: oneclient,
 			}
 		}

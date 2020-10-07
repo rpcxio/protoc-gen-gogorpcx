@@ -282,34 +282,27 @@ func (c *GreeterClient) SayHello(ctx context.Context, args *HelloRequest) (reply
 }
 
 //================== oneclient stub===================
-// Greeter is a client wrapped oneClient.
-type GreeterClient struct {
-	xclient client.XClient
+// GreeterOneClient is a client wrapped oneClient.
+type GreeterOneClient struct {
+	serviceName string
+	oneclient   client.OneClient
 }
 
-// NewGreeterClient wraps a XClient as GreeterClient.
-// You can pass a shared XClient object created by NewXClientForGreeter.
-func NewGreeterClient(xclient client.XClient) *GreeterClient {
-	return &GreeterClient{xclient: xclient}
-}
-
-// NewXClientForGreeter creates a XClient.
-// You can configure this client with more options such as etcd registry, serialize type, select algorithm and fail mode.
-func NewXClientForGreeter(addr string) client.XClient {
-	d := client.NewPeer2PeerDiscovery("tcp@"+addr, "")
-	opt := client.DefaultOption
-	opt.SerializeType = protocol.ProtoBuffer
-
-	xclient := client.NewXClient("Greeter", client.Failtry, client.RoundRobin, d, opt)
-	return xclient
+// NewGreeterOneClient wraps a OneClient as GreeterOneClient.
+// You can pass a shared OneClient object created by NewOneClientForGreeter.
+func NewGreeterOneClient(oneclient client.OneClient) *GreeterOneClient {
+	return &GreeterOneClient{
+		serviceName: Greeter,
+		oneclient:   oneclient,
+	}
 }
 
 // ======================================================
 
 // SayHello is client rpc method as defined
-func (c *GreeterClient) SayHello(ctx context.Context, args *HelloRequest) (reply *HelloReply, err error) {
+func (c *GreeterOneClient) SayHello(ctx context.Context, args *HelloRequest) (reply *HelloReply, err error) {
 	reply = &HelloReply{}
-	err = c.xclient.Call(ctx, "SayHello", args, reply)
+	err = c.oneclient.Call(ctx, c.serviceName, "SayHello", args, reply)
 	return reply, err
 }
 

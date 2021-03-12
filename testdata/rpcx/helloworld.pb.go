@@ -263,13 +263,16 @@ func NewGreeterClient(xclient client.XClient) *GreeterClient {
 
 // NewXClientForGreeter creates a XClient.
 // You can configure this client with more options such as etcd registry, serialize type, select algorithm and fail mode.
-func NewXClientForGreeter(addr string) client.XClient {
-	d := client.NewPeer2PeerDiscovery("tcp@"+addr, "")
+func NewXClientForGreeter(addr string) (client.XClient, error) {
+	d, err := client.NewPeer2PeerDiscovery("tcp@"+addr, "")
+	if err != nil {
+		return nil, err
+	}
 	opt := client.DefaultOption
 	opt.SerializeType = protocol.ProtoBuffer
 
 	xclient := client.NewXClient("Greeter", client.Failtry, client.RoundRobin, d, opt)
-	return xclient
+	return xclient, nil
 }
 
 // ======================================================

@@ -56,7 +56,7 @@ func (p *rpcx) Generate(file *generator.FileDescriptor) {
 	if len(file.FileDescriptorProto.Service) == 0 {
 		return
 	}
-	_ = p.gen.AddImport(rpcxServerPkgPath)
+	// _ = p.gen.AddImport(rpcxServerPkgPath)
 	_ = p.gen.AddImport(rpcxClientPkgPath)
 	_ = p.gen.AddImport(rpcxProtocolPkgPath)
 	_ = p.gen.AddImport("context")

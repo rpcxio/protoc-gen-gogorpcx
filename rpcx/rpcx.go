@@ -90,28 +90,28 @@ func (p *rpcx) generateService(file *generator.FileDescriptor, service *pb.Servi
 	p.P(fmt.Sprintf(`}`))
 
 	// server
-	p.P()
-	p.P("//================== server skeleton ===================")
-	p.P(fmt.Sprintf(`type %[1]sImpl struct {}
+	// p.P()
+	// p.P("//================== server skeleton ===================")
+	// p.P(fmt.Sprintf(`type %[1]sImpl struct {}
 
-		// ServeFor%[1]s starts a server only registers one service.
-		// You can register more services and only start one server.
-		// It blocks until the application exits.
-		func ServeFor%[1]s(addr string) error{
-			s := server.NewServer()
-			s.RegisterName(ServiceNameOf%[1]s, new(%[1]sImpl), "")
-			return s.Serve("tcp", addr)
-		}
-	`, serviceName))
-	p.P()
-	p.P(fmt.Sprintf(`func Register%[1]sServe(s *server.Server, srv %[1]sAble, metadata string) error{
-			return s.RegisterName(ServiceNameOf%[1]s, srv, metadata)
-		}
-	`, serviceName))
-	p.P()
-	for _, method := range service.Method {
-		p.generateServerCode(service, method)
-	}
+	// 	// ServeFor%[1]s starts a server only registers one service.
+	// 	// You can register more services and only start one server.
+	// 	// It blocks until the application exits.
+	// 	func ServeFor%[1]s(addr string) error{
+	// 		s := server.NewServer()
+	// 		s.RegisterName(ServiceNameOf%[1]s, new(%[1]sImpl), "")
+	// 		return s.Serve("tcp", addr)
+	// 	}
+	// `, serviceName))
+	// p.P()
+	// p.P(fmt.Sprintf(`func Register%[1]sServe(s *server.Server, srv %[1]sAble, metadata string) error{
+	// 		return s.RegisterName(ServiceNameOf%[1]s, srv, metadata)
+	// 	}
+	// `, serviceName))
+	// p.P()
+	// for _, method := range service.Method {
+	// 	p.generateServerCode(service, method)
+	// }
 
 	// xclient
 	p.P()
